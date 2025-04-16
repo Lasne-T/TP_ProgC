@@ -1,19 +1,25 @@
 #include <stdio.h>
-#include <string.h>
+
 int main() {
-    int compteur ;
-    printf("Taille de la pyramide : \n");
-    scanf("%d",&compteur);
-    for (int i = 1; i <= compteur; i++) {
-        for (int j = 1; j <= i; j++) {
-            if (i % 2 == 0 && j > 1 && j < i) {
-                printf("# ");
-            } else {
-                printf("* ");
-            }
+    int n ;
+    printf("La taille de la pyramide doit être de : \n");
+    scanf("%d",&n);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n - i; j++) {
+            printf(" ");
         }
+        
+        for (int j = 1; j <= i; j++) {
+            printf("%d", j);
+        }
+        
+        for (int j = i - 1; j >= 1; j--) {
+            printf("%d", j);
+        }
+        
         printf("\n");
     }
-
+    
+    printf("Pyramide générée avec succès !\n");
     return 0;
 }
