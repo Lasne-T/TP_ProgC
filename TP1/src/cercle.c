@@ -2,9 +2,7 @@
 #include <string.h>
 #include <math.h>
 int main() {
-    float rayon;
-    printf("Entrez la valeur du rayon");
-    scanf("%f", &rayon);
+    float rayon = 12;
     float air = M_PI * rayon * rayon;
     float perimeter = 2 * M_PI * rayon;
     printf("Surface de l'air : %f\n", air);
