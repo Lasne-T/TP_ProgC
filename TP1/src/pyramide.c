@@ -2,7 +2,7 @@
 #include <string.h>
 int main() {
     int compteur ;
-    printf("Taille de la pyramide :");
+    printf("Taille de la pyramide : \n");
     scanf("%d",&compteur);
     for (int i = 1; i <= compteur; i++) {
         for (int j = 1; j <= i; j++) {
