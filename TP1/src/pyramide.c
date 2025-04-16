@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+,
 int main() {
     int n ;
     printf("La taille de la pyramide doit être de : \n");
