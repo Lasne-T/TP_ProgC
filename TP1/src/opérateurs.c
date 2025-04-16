@@ -11,7 +11,7 @@ int main() {
     int division = a / b;
     int modulo = a % b;
     bool egale = a == b;
-    bool superieur = a < b;
+    bool superieur = a > b;
     printf("La valeur de a est : %d",a);
     printf("\nLa valeur de b est : %d",b);
     printf("\nLa somme de a et b est : %d", addition);
