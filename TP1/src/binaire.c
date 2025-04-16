@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 void afficherBinaire(int nombre) {
     int taille = sizeof(int) * 8;
