@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 int main() {
-    unsigned int d = 0x00100008;
+    unsigned int d = 0x80100008; //0x00100008
     unsigned int masque4 = 1 << (32 - 4);
     unsigned int masque20 = 1 << (32 - 20);
   
