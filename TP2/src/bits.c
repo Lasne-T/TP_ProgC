@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    unsigned int d = 0x08801000 | (1 << 12);
+    unsigned int d = 0x08801000;
 
     
     int bit1 = (d >> (31 - 3)) & 1;  
