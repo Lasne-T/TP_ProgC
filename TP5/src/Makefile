@@ -1,11 +1,8 @@
 CC ?= gcc
+CFLAGS = -Wall -Wextra -g
 
-CFLAGS=-Wall -Wextra -g
-
-COBJS ?= client.o
-SOBJS ?= serveur.o 
-
-.SUFFIXES: .c .o
+COBJS = client.o
+SOBJS = serveur.o
 
 SERVER = serveur
 CLIENT = client
@@ -18,6 +15,5 @@ $(SERVER): $(SOBJS)
 $(CLIENT): $(COBJS)
 	$(CC) -o $(CLIENT) $(COBJS)
 
-.c.o: 
+.c.o:
 	$(CC) -c $*.c
-
