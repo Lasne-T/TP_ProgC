@@ -5,11 +5,14 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+
 #include "client.h"
+
 
 int envoie_recois_message(int socketfd)
 {
   char data[1024];
+
   memset(data, 0, sizeof(data));
 
   char message[1024];
@@ -27,6 +30,7 @@ int envoie_recois_message(int socketfd)
   }
 
   memset(data, 0, sizeof(data));
+
   int read_status = read(socketfd, data, sizeof(data));
   if (read_status < 0)
   {
@@ -35,12 +39,14 @@ int envoie_recois_message(int socketfd)
   }
 
   printf("Message reçu: %s\n", data);
-  return 0;
+
+  return 0; 
 }
 
 int main()
 {
   int socketfd;
+
   struct sockaddr_in server_addr;
 
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -53,9 +59,11 @@ int main()
   memset(&server_addr, 0, sizeof(server_addr));
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(PORT);
-  server_addr.sin_addr.s_addr = INADDR_ANY;
 
-  if (connect(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+  server_addr.sin_addr.s_addr = inet_addr("10.0.48.4");  
+
+  int connect_status = connect(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
+  if (connect_status < 0)
   {
     perror("connection serveur");
     exit(EXIT_FAILURE);
@@ -67,5 +75,4 @@ int main()
   }
 
   close(socketfd);
-  return 0;
 }
