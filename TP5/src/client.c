@@ -8,7 +8,6 @@
 
 #include "client.h"
 
-
 int envoie_recois_message(int socketfd)
 {
   char data[1024];
@@ -49,6 +48,7 @@ int main()
 
   struct sockaddr_in server_addr;
 
+ 
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
   if (socketfd < 0)
   {
@@ -60,7 +60,10 @@ int main()
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(PORT);
 
-  server_addr.sin_addr.s_addr = inet_addr("10.0.48.4");  
+  if (inet_pton(AF_INET, "10.0.48.4", &server_addr.sin_addr) <= 0) {
+    perror("Adresse IP invalide");
+    exit(EXIT_FAILURE);
+  }
 
   int connect_status = connect(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (connect_status < 0)
@@ -71,6 +74,7 @@ int main()
 
   while (1)
   {
+    
     envoie_recois_message(socketfd);
   }
 
