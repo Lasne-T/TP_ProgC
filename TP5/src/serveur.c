@@ -26,8 +26,15 @@ int renvoie_message(int client_socket_fd, char *data)
 int recois_envoie_message(int client_socket_fd, char *data)
 {
   printf("Message reçu: %s\n", data);
-  const char *response = "message: Bonjour, client!";
-  return renvoie_message(client_socket_fd, response);
+  char code[10];
+  if (sscanf(data, "%9s:", code) == 1)
+  {
+    if (strcmp(code, "message:") == 0)
+    {
+      return renvoie_message(client_socket_fd, data);
+    }
+  }
+  return EXIT_SUCCESS;
 }
 
 void gestionnaire_ctrl_c(int signal)
@@ -69,37 +76,29 @@ int main()
   int bind_status;
   struct sockaddr_in server_addr;
   int option = 1;
-
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
   if (socketfd < 0)
   {
     perror("Impossible d'ouvrir une socket");
     return -1;
   }
-
   setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
-
   memset(&server_addr, 0, sizeof(server_addr));
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(PORT);
   server_addr.sin_addr.s_addr = INADDR_ANY;
-
   bind_status = bind(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (bind_status < 0)
   {
     perror("bind");
-    return (EXIT_FAILURE);
+    return EXIT_FAILURE;
   }
-
   signal(SIGINT, gestionnaire_ctrl_c);
-
   listen(socketfd, 10);
   printf("Serveur en attente de connexions...\n");
-
   struct sockaddr_in client_addr;
   unsigned int client_addr_len = sizeof(client_addr);
   int client_socket_fd;
-
   while (1)
   {
     client_socket_fd = accept(socketfd, (struct sockaddr *)&client_addr, &client_addr_len);
@@ -108,7 +107,6 @@ int main()
       perror("accept");
       continue;
     }
-
     pid_t child_pid = fork();
     if (child_pid == 0)
     {
@@ -126,6 +124,5 @@ int main()
       close(client_socket_fd);
     }
   }
-
   return 0;
 }
