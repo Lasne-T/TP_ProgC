@@ -5,13 +5,14 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include "client.h"
 
 int envoie_recois_message(int socketfd)
 {
   char data[1024];
   memset(data, 0, sizeof(data));
-  const char *message = "message: Bonjour, serveur!";
+  char message[1024] = "message: Bonjour depuis le client";
   strcpy(data, message);
   int write_status = write(socketfd, data, strlen(data));
   if (write_status < 0)
@@ -40,23 +41,20 @@ int main()
     perror("socket");
     exit(EXIT_FAILURE);
   }
-
   memset(&server_addr, 0, sizeof(server_addr));
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(PORT);
-  server_addr.sin_addr.s_addr = INADDR_ANY;
-
+  inet_aton("10.0.48.6", &server_addr.sin_addr);
   int connect_status = connect(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (connect_status < 0)
   {
     perror("connection serveur");
     exit(EXIT_FAILURE);
   }
-
   while (1)
   {
     envoie_recois_message(socketfd);
+    sleep(5);
   }
-
   close(socketfd);
 }
