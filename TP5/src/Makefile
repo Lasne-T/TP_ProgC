@@ -1,19 +1,8 @@
-CC ?= gcc
-CFLAGS = -Wall -Wextra -g
+#ifndef __CLIENT_H__
+#define __CLIENT_H__
 
-COBJS = client.o
-SOBJS = serveur.o
+#define PORT 8089
 
-SERVER = serveur
-CLIENT = client
+int envoie_recois_message(int socketfd);
 
-all: $(SERVER) $(CLIENT)
-
-$(SERVER): $(SOBJS)
-	$(CC) -o $(SERVER) $(SOBJS)
-
-$(CLIENT): $(COBJS)
-	$(CC) -o $(CLIENT) $(COBJS)
-
-.c.o:
-	$(CC) -c $*.c
+#endif
